@@ -1,0 +1,22 @@
+{
+  "name": "photo-grid-back-end",
+  "version": "1.0.0",
+  "description": "Express.js app for photo-grid.github.io",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/photo-grid/photo-grid-back-end.git"
+  },
+  "author": "Thedath Oudarya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/photo-grid/photo-grid-back-end/issues"
+  },
+  "homepage": "https://github.com/photo-grid/photo-grid-back-end#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
