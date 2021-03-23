@@ -1,4 +1,6 @@
+const port = 8888
+const baseURL = `http://localhost:${port}/`
 module.exports = {
-    port: 8888,
-    baseURL: `http://localhost:3000/`
+    port,
+    baseURL
 }
