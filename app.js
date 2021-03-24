@@ -1,11 +1,21 @@
-const config = require('./config')
-const express = require('express')
-const app = express()
+const { port, endpointPrefix, baseURL } = require("./config/const");
+const express = require("express");
+const logger = require("./config/logger");
+const mongodb = require("./config/mongo");
+const gridRouter = require("./route/gridRoutes");
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const app = express();
 
-app.listen(config.port, () => {
-  console.log(`Photo grid app running on ${config.baseURL}`)
-})
+app.use(express.json());
+
+if (mongodb) {
+  logger.info("MongoDB connection successfully established");
+} else {
+  logger.error("MongoDB connection failed");
+}
+
+app.use(endpointPrefix, gridRouter);
+
+app.listen(port, () => {
+  logger.info(`Photo grid app running on ${baseURL}`);
+});
