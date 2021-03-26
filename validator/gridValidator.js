@@ -20,9 +20,14 @@ exports.gridChangeValidator = [
     .withMessage("'imageId' is required")
     .isNumeric()
     .withMessage("'imageId' must be a number"),
-  check("items.*.possition")
+  check("items.*.imageURL")
     .notEmpty()
-    .withMessage("'possition' is required")
+    .withMessage("'imageURL' is required")
+    .isURL()
+    .withMessage("'imageURL' must be a valid URL"),
+  check("items.*.position")
+    .notEmpty()
+    .withMessage("'position' is required")
     .isInt({ min: -1, max: 8 })
     .withMessage("Must be between -1 and 8"),
   validationErrorsHandler,

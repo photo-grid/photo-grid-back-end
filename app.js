@@ -3,9 +3,11 @@ const express = require("express");
 const logger = require("./config/logger");
 const mongodb = require("./config/mongo");
 const gridRouter = require("./route/gridRoutes");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 if (mongodb) {
