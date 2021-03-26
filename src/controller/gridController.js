@@ -1,4 +1,4 @@
-const logger = require("../config/logger");
+const logger = require("../src/config/logger");
 const GridModel = require("../models/gridModel");
 const gridImageGenerator = require("../util/gridImageGenerator");
 
