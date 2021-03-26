@@ -1,5 +1,5 @@
 const gridRouter = require("express").Router();
-const gridController = require("../../controller/gridController");
+const gridController = require("../controller/gridController");
 const { gridFindValidator, gridChangeValidator } = require('../validator/gridValidator');
 
 gridRouter

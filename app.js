@@ -1,8 +1,8 @@
-const { port, endpointPrefix, baseURL } = require("./config/const");
+const { port, endpointPrefix, baseURL } = require("./src/config/const");
 const express = require("express");
-const logger = require("./config/logger");
-const mongodb = require("./config/mongo");
-const gridRouter = require("./route/gridRoutes");
+const logger = require("./src/config/logger");
+const mongodb = require("./src/config/mongo");
+const gridRouter = require("./src/route/gridRoutes");
 const cors = require("cors");
 
 const app = express();

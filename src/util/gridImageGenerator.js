@@ -1,4 +1,4 @@
-const { gridSquareImageDimention } = require("../src/config/const");
+const { gridSquareImageDimention } = require("../config/const");
 
 const { createCanvas, loadImage } = require("canvas");
 const canvas = createCanvas(gridSquareImageDimention, gridSquareImageDimention);

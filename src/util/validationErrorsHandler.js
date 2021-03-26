@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const logger = require("../src/config/logger");
+const logger = require("../config/logger");
 
 module.exports = (req, res, next) => {
   const validationErrors = validationResult(req);
