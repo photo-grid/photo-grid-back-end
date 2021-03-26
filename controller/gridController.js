@@ -1,6 +1,6 @@
 const logger = require("../config/logger");
 const GridModel = require("../models/gridModel");
-const handleValidationErrors = require("../util/validationErrorsHandler");
+const gridImageGenerator = require("../util/gridImageGenerator");
 
 exports.find = (req, res) => {
   const _id = req.headers["user-uuid"];
@@ -8,12 +8,18 @@ exports.find = (req, res) => {
     if (error) {
       logger.error(`Error finding user's grid. User UUID: ${_id}`);
       logger.error(error);
-      res.status(400).json({
-        message: error,
-      });
+      res.status(400).json({ error });
     } else {
-      logger.info(`Grid found. User UUID: ${_id}`);
-      res.json(grid || {});
+      if (grid) {
+        logger.info(`Grid found. User UUID: ${_id}`);
+        gridImageGenerator(res, grid.items);
+      } else {
+        logger.info(`Grid not found. User UUID: ${_id}`);
+        res.json({
+          gridImage: '',
+          items: []
+        });
+      }
     }
   });
 };
@@ -28,12 +34,10 @@ exports.change = (req, res) => {
       if (error) {
         logger.error(`Error changing user's grid. User UUID: ${_id}`);
         logger.error(error);
-        res.status(400).json({
-          message: error,
-        });
+        res.status(400).json({ error });
       } else {
         logger.info(`Grid successfully changed. User UUID: ${_id}`);
-        res.json(grid);
+        gridImageGenerator(res, grid.items);
       }
     }
   );
