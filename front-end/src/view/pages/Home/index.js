@@ -1,21 +1,26 @@
 import React from "react";
 import ImageSelector from "../../components/ImageSelector";
 import ImageGrid from "../../components/ImageGrid";
-import { Container, CssBaseline, Grid } from "@material-ui/core";
+import { Box, Container, CssBaseline, Grid } from "@material-ui/core";
 
 const Home = () => {
   return (
     <>
-     <CssBaseline />
-      <Container fixed>
-        <Grid container height="100%" justifyItems="center" alignItems="center">
-          <Grid item xs={6}>
+      <Container bgcolor="background.paper">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          m={1}
+          p={1}
+        >
+          <Box pr={5}>
             <ImageSelector />
-          </Grid>
-          <Grid item xs={6}>
+          </Box>
+          <Box pl={5}>
             <ImageGrid />
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Container>
     </>
   );

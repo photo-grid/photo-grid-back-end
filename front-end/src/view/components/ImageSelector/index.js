@@ -10,12 +10,24 @@ import {
   Typography,
   makeStyles,
   Button,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardActions,
 } from "@material-ui/core";
+import Image from "material-ui-image";
 import SaveIcon from "@material-ui/icons/Save";
 import { grey } from "@material-ui/core/colors";
 import { lightWeightImages } from "../../../config";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 500,
+  },
+  imageList: {
+    widht: 400,
+    height: 500,
+  },
   image: {
     backgroundImage: "url('/images/background.png')",
     backgroundSize: "cover",
@@ -66,14 +78,10 @@ const ImageSelector = () => {
       );
       return (
         <ImageListItem key={image.id}>
-          <img
-            srcSet={image.picture}
-            alt={`ID: ${image.id}`}
-            loading="lazy"
-            className={classes.image}
-            onClick={() => {
-              onImageClick(image);
-            }}
+          <Image
+            onClick={() => onImageClick(image)}
+            src={image.picture}
+            aspectRatio={1 / 1}
           />
           {selectedImage && (
             <Box
@@ -133,27 +141,36 @@ const ImageSelector = () => {
 
   return (
     <>
-      <CssBaseline />
-      <Container fixed>
-        <Box display="flex" justifyContent="center">
-          <ImageList sx={{ width: 600, height: 600 }} cols={3} rowHeight={200}>
+      <Card className={classes.root} elevation={10}>
+        <Box p={3}>
+          <ImageList className={classes.imageList} cols={3} rowHeight={200}>
             {buildImageGridView()}
           </ImageList>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              Select Images
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Select nine images in a desired order. Click{" "}
+              <strong>Generate Grid Image</strong> to get merged image of
+              selected images.
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.button}
+              startIcon={<SaveIcon />}
+              disabled={selectedImages.length !== 9 || gridProcessing}
+              onClick={onSavePress}
+            >
+              Generate Grid Image
+            </Button>
+          </CardActions>
         </Box>
-        <Box display="flex" justifyContent="flex-end">
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            className={classes.button}
-            startIcon={<SaveIcon />}
-            disabled={selectedImages.length !== 9 || gridProcessing}
-            onClick={onSavePress}
-          >
-            Save
-          </Button>
-        </Box>
-      </Container>
+      </Card>
     </>
   );
 };
