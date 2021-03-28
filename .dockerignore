@@ -1,0 +1,10 @@
+node_modules
+front-end/node_modules
+
+yarn.lock
+front-end/yarn.lock
+
+.vscode**
+
+npm-debug.log
+logs.log
