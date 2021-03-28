@@ -1,8 +1,9 @@
 import React from "react";
 import ImageSelector from "../../components/ImageSelector";
 import ImageGrid from "../../components/ImageGrid";
-import { Box, Container, CssBaseline, Grid } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 
+// functional component for main page of the app
 const Home = () => {
   return (
     <>

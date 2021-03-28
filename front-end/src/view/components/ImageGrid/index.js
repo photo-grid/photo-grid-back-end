@@ -1,14 +1,10 @@
 import {
   Box,
   Card,
-  CardActionArea,
   CardContent,
-  CardHeader,
-  CardMedia,
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import Image from "material-ui-image";
 
 import React, { useContext, useEffect } from "react";
 import { Context as GridContext } from "../../../context/grid/GridContext";
@@ -31,11 +27,13 @@ const useStyles = makeStyles((theme) => ({
 const ImageGrid = () => {
   const classes = useStyles();
 
+  // referncing the grid context
   const {
     state: { grid, gridProcessing, gridError },
     getGrid,
   } = useContext(GridContext);
 
+  // getting the user's grid at the moment
   useEffect(() => {
     getGrid();
   }, []);

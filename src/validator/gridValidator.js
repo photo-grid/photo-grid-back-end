@@ -1,6 +1,7 @@
 const { header, body, check } = require("express-validator");
 const validationErrorsHandler = require("../util/validationErrorsHandler");
 
+// defining the API action wise request validators
 exports.gridFindValidator = [
   header("user-uuid")
     .notEmpty()

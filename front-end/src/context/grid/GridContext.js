@@ -9,6 +9,8 @@ import {
   GRID_ERRORS_CLEAR,
 } from "./gridActions";
 
+// reducer funtion to be used by the userReducer
+// final state manupulation hapens here
 const gridReducer = (state, action) => {
   switch (action.type) {
     case GRID_IMAGES_SET:
@@ -16,7 +18,12 @@ const gridReducer = (state, action) => {
     case GRID_IMAGES_ERROR_SET:
       return { ...state, imagesError: action.error, imagesProcessing: false };
     case GRID_SET:
-      return { ...state, grid: action.grid, items: action.items, gridProcessing: false };
+      return {
+        ...state,
+        grid: action.grid,
+        items: action.items,
+        gridProcessing: false,
+      };
     case GRID_ERROR_SET:
       return { ...state, gridError: action.error, gridProcessing: false };
     case GRID_ERRORS_CLEAR:
@@ -32,6 +39,13 @@ const gridReducer = (state, action) => {
   }
 };
 
+/**
+ * Calling the image source API caller and receves
+ * list of images
+ *
+ * @param {*} dispatch
+ * @returns function to used in the images requesting functionality
+ */
 const loadImages = (dispatch) => () => {
   dispatch({ type: GRID_ERRORS_CLEAR });
   callImagesLoader(
@@ -47,11 +61,20 @@ const loadImages = (dispatch) => () => {
   );
 };
 
+/**
+ * Calling the caller for getting user's current image grid
+ * @param {*} dispatch
+ * @returns function to used in getting curren tuser's grid as for now
+ */
 const getGrid = (dispatch) => () => {
   dispatch({ type: GRID_ERRORS_CLEAR });
   callFindGrid(
     (response) => {
-      dispatch({ type: GRID_SET, grid: response.data.gridImage, items: response.data.items });
+      dispatch({
+        type: GRID_SET,
+        grid: response.data.gridImage,
+        items: response.data.items,
+      });
     },
     (error) => {
       dispatch({
@@ -62,12 +85,21 @@ const getGrid = (dispatch) => () => {
   );
 };
 
+/**
+ * Calling the caller for updating user's current image grid
+ * @param {*} dispatch
+ * @returns function to used in updating current tuser's grid wiht the new one
+ */
 const updateGrid = (dispatch) => (items) => {
   dispatch({ type: GRID_ERRORS_CLEAR });
   callChangeGrid(
     items,
     (response) => {
-      dispatch({ type: GRID_SET, grid: response.data.gridImage, items: response.data.items });
+      dispatch({
+        type: GRID_SET,
+        grid: response.data.gridImage,
+        items: response.data.items,
+      });
     },
     (error) => {
       dispatch({

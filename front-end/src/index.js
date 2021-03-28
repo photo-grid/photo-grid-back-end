@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
+// initiating the react router for app
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

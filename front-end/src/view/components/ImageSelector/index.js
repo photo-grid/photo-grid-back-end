@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context as GridContext } from "../../../context/grid/GridContext";
 import { useLocation } from "react-router";
 import {
-  CssBaseline,
-  Container,
   Box,
   ImageList,
   ImageListItem,
@@ -11,7 +9,6 @@ import {
   makeStyles,
   Button,
   Card,
-  CardActionArea,
   CardContent,
   CardActions,
 } from "@material-ui/core";
@@ -26,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   imageList: {
     widht: 400,
-    height: 500,
+    height: 450,
   },
   image: {
     backgroundImage: "url('/images/background.png')",
@@ -49,28 +46,28 @@ const useStyles = makeStyles((theme) => ({
 const ImageSelector = () => {
   const classes = useStyles();
   const location = useLocation();
+
+  // detecting isLight flag is true, if so switching to the lgiht weught
+  // hard coded image source
   const isLight = location.search.startsWith("?light=true");
+
+  // accessing the context data and grid related fucntions
   const {
-    state: {
-      images,
-      imagesError,
-      imagesProcessing,
-      grid,
-      items,
-      gridError,
-      gridProcessing,
-    },
+    state: { images, items, gridProcessing },
     loadImages,
     updateGrid,
   } = useContext(GridContext);
   const [selectedImages, setSelectedImages] = useState([]);
 
+  // if it is not to use the light weight images
+  // calling the provided image source to get all the images
   useEffect(() => {
     if (!isLight) {
       loadImages();
     }
   }, [isLight]);
 
+  // building the main image selection area
   const buildImageGridView = () =>
     (isLight ? lightWeightImages : images).map((image, index) => {
       const selectedImage = selectedImages.find(
@@ -102,11 +99,20 @@ const ImageSelector = () => {
       );
     });
 
+  // handles the click on an image
+  // once clicked, checked agaisn the already selected images
+  // and determines whether cliked image needs to be removed or
+  // push to the list from the end
   const onImageClick = (image) => {
+    // getting all the images not equal to selected image id from already
+    // selected image lsit at this point
     const filteredSelectedItems = selectedImages.filter(
       (selectedImage) => selectedImage.imageId !== image.id
     );
+
+    // check the sizes against the images array, before current selection
     if (selectedImages.length === filteredSelectedItems.length) {
+      // sizes equals means this time user has clicked on a new image
       if (selectedImages.length < 9) {
         setSelectedImages([
           ...filteredSelectedItems,
@@ -116,8 +122,13 @@ const ImageSelector = () => {
             position: selectedImages.length,
           },
         ]);
+      } else {
+        alert(
+          "Already image selections are done. Click on an existing image to unselect."
+        );
       }
     } else {
+      // sizes not equals means this time user clicked to unselect an image
       setSelectedImages(
         filteredSelectedItems.map((image, index) => ({
           ...image,
@@ -127,14 +138,20 @@ const ImageSelector = () => {
     }
   };
 
+  // calling grid update API
   const onSavePress = () => {
     updateGrid(selectedImages);
   };
 
+  // when items state gets changed (from saving new image combination or
+  // from getting user's initial grid combination) marking the images on
+  // image selection area to indicate user's previosu selections
   useEffect(() => {
     if (items.length && items.length > 0 && selectedImages.length === 0) {
       let newItems = [...items];
+      // sorting the array by position id
       newItems.sort((left, right) => left.position - right.position);
+      // setting the current image selection from previous image selection
       setSelectedImages(newItems);
     }
   }, [items]);
@@ -150,10 +167,14 @@ const ImageSelector = () => {
             <Typography gutterBottom variant="h5" component="h2">
               Select Images
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography variant="body1" color="textSecondary" component="p">
               Select nine images in a desired order. Click{" "}
               <strong>Generate Grid Image</strong> to get merged image of
               selected images.
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              (Click on already selected images to change selection with order.
+              Needs to made exact nine selections)
             </Typography>
           </CardContent>
           <CardActions>
