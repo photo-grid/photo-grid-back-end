@@ -44,8 +44,9 @@ module.exports = async (res, images = []) => {
     destinationY = parseInt(i / 3) * parseInt(gridSquareImageDimention/3);
     await drawOnDestination(image, destinationX, destinationY);
   }
+  const data = canvas.toDataURL();
   return res.json({
-    gridImage: canvas.toDataURL(),
+    gridImage: data,
     items: images
   });
 }
